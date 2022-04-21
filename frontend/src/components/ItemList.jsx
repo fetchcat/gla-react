@@ -4,18 +4,19 @@ import axios from "axios";
 
 import { ItemContext } from "../context/ItemContext";
 
-import { ErrorContext } from "../context/ErrorContext";
+import { MsgContext } from "../context/MsgContext";
 
 import Item from "./Item";
 
 const ItemList = () => {
   const [items, setItems] = useContext(ItemContext);
-  const [error, setError] = useContext(ErrorContext);
+  const [msg, setMsg] = useContext(MsgContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getItems = useCallback(async () => {
+    setMsg("");
     setIsLoaded(false);
     setIsLoading(true);
     try {
@@ -28,10 +29,11 @@ const ItemList = () => {
       setIsLoading(false);
       setIsLoaded(true);
     } catch (error) {
+      setIsLoaded(true);
       setIsLoading(false);
-      setError(error.message);
+      setMsg("Cannot fetch items...");
     }
-  }, [setItems]);
+  }, [setItems, setMsg]);
 
   const delItem = async (id) => {
     try {
@@ -42,9 +44,12 @@ const ItemList = () => {
       });
       const newItems = items.filter((item) => item._id !== id);
       setItems(newItems);
-      return response;
+      setMsg(response.data.message);
+      setTimeout(() => {
+        setMsg("");
+      }, 1000);
     } catch (error) {
-      setError(error.message);
+      setMsg(error.message);
     }
   };
 
@@ -59,24 +64,19 @@ const ItemList = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      getItems();
-    }, 2000);
+    getItems();
   }, [getItems]);
 
   return (
     <>
-      {error.length > 0 && <div className="msg">Fail</div>}
+      {isLoaded && msg && <div className="msg">{msg}</div>}
       {isLoading && <div className="msg">Loading...</div>}
       {isLoaded && <ItemMap />}
+      {isLoaded && !items.length && !msg.length && (
+        <div className="msg">No items to display</div>
+      )}
     </>
   );
-
-  // error ? (
-  //
-  // ) : (
-  //   <div className="msg">No Items to display...</div>
-  // );
 };
 
 export default ItemList;

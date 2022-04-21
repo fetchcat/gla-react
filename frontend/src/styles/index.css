@@ -10,8 +10,11 @@
   --background-color: #c2e7da;
   --alt-background-color: #f1ffe7;
 
-  --add-color: #baff29;
+  --add-color: #8bcc00;
+  --alt-add-color: #99e000;
+
   --del-color: #df2935;
+  --alt-del-color: #e44e58;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
@@ -60,6 +63,10 @@ body {
   padding: 0px 20px;
 }
 
+.add-item-form input:focus {
+  outline: solid 2px var(--add-color);
+}
+
 ::placeholder {
   color: var(--primary-color);
   opacity: 1;
@@ -105,8 +112,16 @@ body {
   background-color: var(--del-color);
 }
 
+.del:hover {
+  background-color: var(--alt-del-color);
+}
+
 .add {
   background-color: var(--add-color);
+}
+
+.add:hover {
+  background-color: var(--alt-add-color);
 }
 
 .msg {
@@ -121,4 +136,8 @@ body {
   border-radius: 20px;
   background-color: var(--alt-primary-color);
   margin: 20px auto 0px auto;
+}
+
+.error {
+  color: var(--del-color);
 }

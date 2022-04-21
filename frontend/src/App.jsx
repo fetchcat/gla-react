@@ -1,6 +1,6 @@
 import { ItemProvider } from "./context/ItemContext";
 
-import { ErrorProvider } from "./context/ErrorContext";
+import { MsgProvider } from "./context/MsgContext";
 
 import Header from "./components/Header";
 import ItemList from "./components/ItemList";
@@ -8,12 +8,12 @@ import ItemList from "./components/ItemList";
 function App() {
   return (
     <ItemProvider>
-      <ErrorProvider>
+      <MsgProvider>
         <div className="App">
           <Header />
           <ItemList />
         </div>
-      </ErrorProvider>
+      </MsgProvider>
     </ItemProvider>
   );
 }

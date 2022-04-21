@@ -1,15 +1,22 @@
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { ItemContext } from "../context/ItemContext";
+import { MsgContext } from "../context/MsgContext";
 
 import { FaPlus } from "react-icons/fa";
 
 const AddItem = () => {
   const [items, setItems] = useContext(ItemContext);
+  const [, setMsg] = useContext(MsgContext);
 
   const [item, setItem] = useState("");
 
   const addItem = async () => {
+    setMsg("");
+    //Check for item to send first
+    if (item.length === 0) {
+      return;
+    }
     try {
       const response = await axios({
         baseURL: "http://localhost:5000",
@@ -19,7 +26,9 @@ const AddItem = () => {
           name: item,
         },
       });
-      const newItems = [...items, response.data];
+
+      console.log(response);
+      const newItems = [...items, response.data.newItem];
       const sortedItems = newItems.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
@@ -32,8 +41,20 @@ const AddItem = () => {
 
         return 0;
       });
+
       setItems(sortedItems);
+
+      setMsg(response.data.message);
+      setTimeout(() => {
+        setMsg("");
+      }, 1000);
     } catch (error) {
+      if (error.response) {
+        setMsg(error.response.data.message);
+        setTimeout(() => {
+          setMsg("");
+        }, 1000);
+      }
       console.error(error);
     }
   };

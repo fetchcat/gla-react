@@ -22,9 +22,9 @@ const postNewItem = async (req, res) => {
       name: name,
     });
     newItem.save();
-    res.status(201).json(newItem);
+    res.status(201).json({ newItem, message: "Item added successfully" });
   } catch (error) {
-    res.status(400).json({ message: "Error adding item" });
+    res.status(400).json({ message: "Item already exists" });
     console.error(error);
   }
 };
