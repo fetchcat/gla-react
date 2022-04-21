@@ -1,7 +1,27 @@
 # gla-react
-Grocery List App (MERN)
+Grocery List App (MERN Stack)
 
 This is a Grocery List Application using the MongoDB Database, Express, React and Node.js.
+
+## Notes
+
+Be sure to set the following Environment Variables:
+  1. PORT
+  2. SERVER (MongoDB connection string)
+  3. DB (MongoDB database name)
+
+## Scripts
+
+To start backend (with nodemon)
+> yarn server
+
+To start frontend (Development)
+> yarn start
+
+To build frontend (Production)
+> yarn build
+
+## Tags
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
