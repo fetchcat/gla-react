@@ -5,7 +5,7 @@ This is a Grocery List Application using the MongoDB Database, Express, React an
 
 ## Notes
 
-Be sure to set the following Environment Variables:
+Be sure to create a backend/.env file set the following Environment Variables:
   1. PORT
   2. SERVER (MongoDB connection string)
   3. DB (MongoDB database name)
