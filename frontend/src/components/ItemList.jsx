@@ -21,7 +21,7 @@ const ItemList = () => {
     setIsLoading(true);
     try {
       const response = await axios({
-        baseURL: "http://localhost:5000",
+        baseURL: "https://fetchcat.ca/api/glareact",
         url: "/item",
         method: "GET",
       });
@@ -38,7 +38,7 @@ const ItemList = () => {
   const delItem = async (id) => {
     try {
       const response = await axios({
-        baseURL: "http://localhost:5000",
+        baseURL: "https://fetchcat.ca/api/glareact",
         url: `/item/${id}`,
         method: "DELETE",
       });
