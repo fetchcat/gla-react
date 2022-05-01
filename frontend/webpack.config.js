@@ -57,6 +57,7 @@ module.exports = {
       title: "Grocery List App",
       filename: "index.html",
       template: "src/index.html",
+      favicon: "src/assets/favicon.ico",
     }),
     new MiniCssExtractPlugin({
       linkType: "text/css",
