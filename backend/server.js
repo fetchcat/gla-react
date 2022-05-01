@@ -12,6 +12,7 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const server = process.env.SERVER;
 const database = process.env.DB;
+const env = process.env.NODE_ENV;
 
 // --- Connect to MongoDB, then start Express --- //
 
@@ -37,12 +38,14 @@ startBackend();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+if (env === "development") {
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    })
+  );
+}
 
 app.use("/item", itemRoutes);

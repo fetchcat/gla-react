@@ -1,20 +1,20 @@
 :root {
-  --primary-color: #f0f1f9;
-  --alt-primary-color: #e2e4f3;
+  --primary-color: #fff;
+  --alt-primary-color: #e9e9ec;
 
-  --secondary-color: #1a1b41;
-  --alt-secondary-color: #6d70c5;
+  --alt-secondary-color: #60606c;
+  --secondary-color: #303036;
 
   --cta-color: #6290c3;
 
-  --background-color: #c2e7da;
-  --alt-background-color: #f1ffe7;
+  --background-color: #f5f5f5;
+  --alt-background-color: #d6fff5;
 
-  --add-color: #8bcc00;
-  --alt-add-color: #99e000;
+  --add-color: #00f5b8;
+  --alt-add-color: #00cc99;
 
-  --del-color: #df2935;
-  --alt-del-color: #e44e58;
+  --del-color: #f05219;
+  --alt-del-color: #d3420d;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
@@ -27,7 +27,7 @@
 
 body {
   min-height: 100vh;
-  background-color: var(--primary-color);
+  background-color: var(--background-color);
   font-family: "Roboto", sans-serif;
 }
 

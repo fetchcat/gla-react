@@ -19,7 +19,6 @@ const AddItem = () => {
     }
     try {
       const response = await axios({
-        baseURL: "https://fetchcat.ca/api/glareact",
         url: "/item",
         method: "POST",
         data: {
@@ -27,7 +26,6 @@ const AddItem = () => {
         },
       });
 
-      console.log(response);
       const newItems = [...items, response.data.newItem];
       const sortedItems = newItems.sort((a, b) => {
         const nameA = a.name.toUpperCase();
@@ -55,7 +53,6 @@ const AddItem = () => {
           setMsg("");
         }, 1000);
       }
-      console.error(error);
     }
   };
 

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 
 import axios from "axios";
 
@@ -21,7 +21,6 @@ const ItemList = () => {
     setIsLoading(true);
     try {
       const response = await axios({
-        baseURL: "https://fetchcat.ca/api/glareact",
         url: "/item",
         method: "GET",
       });
@@ -38,7 +37,6 @@ const ItemList = () => {
   const delItem = async (id) => {
     try {
       const response = await axios({
-        baseURL: "https://fetchcat.ca/api/glareact",
         url: `/item/${id}`,
         method: "DELETE",
       });
