@@ -46,6 +46,16 @@ if (env === "development") {
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   );
+} else {
+	app.use(
+		cors({
+			origin: ["https://fetchcat.ca", "https://www.fetchcat.ca"],
+			credentials: true,
+			methods: ["GET","POST","PUT","DELETE"],
+		})
+	);
 }
 
-app.use("/item", itemRoutes);
+
+
+app.use("/api/glareact/item", itemRoutes);
