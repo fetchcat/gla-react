@@ -21,7 +21,7 @@ const ItemList = () => {
     setIsLoading(true);
     try {
       const response = await axios({
-        url: "/item",
+        url: "/api/item",
         method: "GET",
       });
       setItems(response.data);
@@ -37,7 +37,7 @@ const ItemList = () => {
   const delItem = async (id) => {
     try {
       const response = await axios({
-        url: `/item/${id}`,
+        url: `/api/item/${id}`,
         method: "DELETE",
       });
       const newItems = items.filter((item) => item._id !== id);

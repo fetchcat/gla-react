@@ -5,10 +5,13 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "pm2 start server.js --name GLA-REACT",
+    "start": "node server.js",
+    "deploy": "cd ../frontend && yarn build && cd ../backend && yarn server",
+    "dev": "concurrently \"yarn start\" \"cd ../frontend && yarn serve\"",
+    "node-install": "cd ../frontend && yarn install && cd ../backend && yarn install"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongoose": "^6.3.0"

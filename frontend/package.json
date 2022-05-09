@@ -7,7 +7,7 @@
   "author": "Michelle Rogers",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack serve",
+    "serve": "webpack serve",
     "build": "webpack --mode=production"
   },
   "dependencies": {

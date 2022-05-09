@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const cors = require("cors");
 
 const itemRoutes = require("./routes/itemRoutes");
 
@@ -24,7 +23,7 @@ const startBackend = async () => {
     });
     console.log(`> Connected to database`);
     app.listen(port, () => {
-      console.log(`> Server is listening on port: ${port}...`);
+      console.log(`> GLA-REACT is listening on port: ${port}...`);
     });
   } catch (error) {
     console.error("> Error connecting to DB", error);
@@ -38,24 +37,18 @@ startBackend();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-if (env === "development") {
+// --- Serve frontend files in production --- //
+
+if (env === "production") {
   app.use(
-    cors({
-      origin: "http://localhost:3000",
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "DELETE"],
-    })
+    "/glareact",
+    express.static(path.resolve(__dirname, "../frontend/build"))
   );
-} else {
-	app.use(
-		cors({
-			origin: ["https://fetchcat.ca", "https://www.fetchcat.ca"],
-			credentials: true,
-			methods: ["GET","POST","PUT","DELETE"],
-		})
-	);
+
+  app.get("*"),
+    function (req, res) {
+      res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+    };
 }
 
-
-
-app.use("/api/glareact/item", itemRoutes);
+app.use("/api/item", itemRoutes);
