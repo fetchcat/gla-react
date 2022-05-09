@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
+const path = require("path");
 
 const itemRoutes = require("./routes/itemRoutes");
 
@@ -51,4 +52,4 @@ if (env === "production") {
     };
 }
 
-app.use("/api/item", itemRoutes);
+app.use("/glareact/api/item", itemRoutes);
