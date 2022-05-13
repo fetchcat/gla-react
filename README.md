@@ -8,9 +8,8 @@ This is a Grocery List Application using the MongoDB Database, Express, React an
 
 Be sure to create a backend/.env file set the following Environment Variables:
 
-1. PORT
-2. SERVER (MongoDB connection string)
-3. DB (MongoDB database name)
+1. SERVER (MongoDB connection string)
+2. DB (MongoDB database name)
 
 ## Scripts
 
@@ -26,17 +25,27 @@ Production Build
 
 ### Backend
 
-Install packages for both frontend and backend
-
-> yarn node-install
-
 Run backend and webpack dev server (Dev Environment)
 
 > yarn dev
 
-Deploy to production environment (build frontend files and add backend server to PM2)
+### Deploy to GCP AppEngine
 
-> yarn deploy
+1. Create a backend/env.yaml file and add
+
+> env_variables:
+
+> SERVER: "mongodb-server-string"
+
+> DB: "mongodb-database"
+
+2. Deploy App
+
+> cd frontend && gcloud app deploy
+
+> cd backend && gcloud app deploy api.yaml
+
+> gcloud app deploy dispatch.yaml
 
 ## Tags
 

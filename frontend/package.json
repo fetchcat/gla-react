@@ -8,14 +8,16 @@
   "license": "MIT",
   "scripts": {
     "serve": "webpack serve",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "start": "serve -s build"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "serve": "^13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

@@ -41,7 +41,6 @@ module.exports = {
       },
     ],
   },
-  devtool: "source-map",
   devServer: {
     static: {
       directory: path.resolve(__dirname, "build"),

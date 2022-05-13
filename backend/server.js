@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const path = require("path");
 
 const itemRoutes = require("./routes/itemRoutes");
 
@@ -12,7 +11,6 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const server = process.env.SERVER;
 const database = process.env.DB;
-const env = process.env.NODE_ENV;
 
 // --- Connect to MongoDB, then start Express --- //
 
@@ -38,18 +36,10 @@ startBackend();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// --- Serve frontend files in production --- //
+app.use("/api", itemRoutes);
 
-if (env === "production") {
-  app.use(
-    "/glareact",
-    express.static(path.resolve(__dirname, "../frontend/build"))
-  );
+app.get("/", (req, res) => {
+  res.status(200).send("GLA App Backend").end();
+});
 
-  app.get("*"),
-    function (req, res) {
-      res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
-    };
-}
-
-app.use("/glareact/api/item", itemRoutes);
+module.exports = app;

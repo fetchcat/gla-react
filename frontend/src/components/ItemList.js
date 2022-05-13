@@ -21,7 +21,7 @@ const ItemList = () => {
     setIsLoading(true);
     try {
       const response = await axios({
-        url: "/glareact/api/item",
+        url: "/api",
         method: "GET",
       });
       setItems(response.data);
@@ -37,7 +37,7 @@ const ItemList = () => {
   const delItem = async (id) => {
     try {
       const response = await axios({
-        url: `/glareact/api/item/${id}`,
+        url: `/api/${id}`,
         method: "DELETE",
       });
       const newItems = items.filter((item) => item._id !== id);

@@ -19,7 +19,7 @@ const AddItem = () => {
     }
     try {
       const response = await axios({
-        url: "/glareact/api/item",
+        url: "/api",
         method: "POST",
         data: {
           name: item,

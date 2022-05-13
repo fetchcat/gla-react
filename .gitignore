@@ -3,6 +3,7 @@ requests.rest
 node_modules
 .env
 request.rest
+env.yaml
 
 # dependencies
 /node_modules
@@ -13,7 +14,7 @@ request.rest
 /coverage
 
 # production
-
+build
 
 # misc
 .DS_Store
