@@ -17,6 +17,7 @@ const getAllItems = async (req, res) => {
 // POST - New Item
 
 const postNewItem = async (req, res) => {
+  console.log(req.body);
   const { name } = req.body;
   try {
     const [rows] = await pool.execute(
@@ -43,7 +44,7 @@ const deleteItemById = async (req, res) => {
       res.status(400).json({ error: "No entry exists" });
     }
     if (rows.affectedRows === 1) {
-      res.status(200).json({ message: "Item deleted successfully" });
+      res.status(200).json({ id: id, message: "Item deleted successfully" });
     }
   } catch (error) {
     res.status(400).json({ error });
