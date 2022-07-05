@@ -1,51 +1,57 @@
-const Item = require("../models/ItemModel");
+const pool = require("../config/db");
 
-const getAllItems = async (req, res, next) => {
+// GET - ALL Items
+
+const getAllItems = async (req, res) => {
   try {
-    const items = await Item.findAll();
-    res.status(200).json({ items });
+    const [rows] = await pool.execute("SELECT * FROM items");
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "No Results" });
+    }
+    res.status(200).json({ rows });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error: error.sqlMessage });
   }
 };
 
-const postNewItem = async (req, res, next) => {
+// POST - New Item
+
+const postNewItem = async (req, res) => {
+  const { name } = req.body;
   try {
-    const { name } = req.body;
-    let item = new Item(name);
-
-    item = await item.save();
-    console.log(item);
-
-    res.status(201).json({ message: "Created" });
+    const [rows] = await pool.execute(
+      `INSERT INTO items (name) VALUES('${name}')`
+    );
+    res.status(201).json({ rows });
   } catch (error) {
-    console.log(error);
+    if (error.code === "ER_DUP_ENTRY") {
+      res.status(400).json({ error: "Entry already exists" });
+    } else {
+      res.status(400).json({ error: "Cannot add entry", sqlMessage });
+      console.log(error);
+    }
   }
 };
 
-const getItemById = async (req, res, next) => {
+// DELETE - Delete Item by ID
+
+const deleteItemById = async (req, res) => {
   const { id } = req.params;
   try {
-    let [item, _] = await Item.findById(id);
-    res.status(200).json({ item: item[0] });
+    const [rows] = await pool.execute(`DELETE FROM items WHERE id = ${id}`);
+    if (rows.affectedRows === 0) {
+      res.status(400).json({ error: "No entry exists" });
+    }
+    if (rows.affectedRows === 1) {
+      res.status(200).json({ message: "Item deleted successfully" });
+    }
   } catch (error) {
-    console.log(error);
-  }
-};
-
-const deleteItemById = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    let [item, _] = await Item.deleteById(id);
-    res.status(200).json({ message: "Item Deleted Successfully" });
-  } catch (error) {
-    console.log(error);
+    res.status(400).json({ error });
   }
 };
 
 module.exports = {
   getAllItems,
   postNewItem,
-  getItemById,
   deleteItemById,
 };
