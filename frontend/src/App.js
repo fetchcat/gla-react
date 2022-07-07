@@ -22,9 +22,8 @@ const App = () => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
-      dispatch({ type: "ADD_ITEM", payload: item });
+      dispatch({ type: "ADD_ITEM", payload: data.item });
     }
   };
 
@@ -46,7 +45,7 @@ const App = () => {
     <div className="App">
       <section className="bg-dark py-3">
         <div className="container-sm">
-          <h1 className="text-light h2 text-center">Grocery List App</h1>
+          <h1 className="text-light h2 text-center">Grocery List App V3</h1>
         </div>
       </section>
       <section className="bg-primary py-3">
