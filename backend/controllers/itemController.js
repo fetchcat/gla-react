@@ -10,25 +10,28 @@ const getAllItems = async (req, res) => {
     }
     res.status(200).json({ rows });
   } catch (error) {
-    res.status(400).json({ error: error.sqlMessage });
+    res.status(400).json({ error: "Failed getting all items" });
+    console.error(error.sqlMmessage);
   }
 };
 
 // POST - New Item
 
 const postNewItem = async (req, res) => {
-  console.log(req.body);
   const { name } = req.body;
   try {
     const [rows] = await pool.execute(
       `INSERT INTO items (name) VALUES('${name}')`
     );
-    res.status(201).json({ rows });
+    const result = await pool.query(
+      `SELECT * FROM items WHERE id = ${rows.insertId}`
+    );
+    res.status(201).json({ rows, item: result[0][0] });
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
-      res.status(400).json({ error: "Entry already exists" });
+      res.status(400).json({ error: "Entry Already Exists" });
     } else {
-      res.status(400).json({ error: "Cannot add entry", sqlMessage });
+      res.status(400).json({ error: "Cannot add entry" });
       console.log(error);
     }
   }
@@ -41,13 +44,16 @@ const deleteItemById = async (req, res) => {
   try {
     const [rows] = await pool.execute(`DELETE FROM items WHERE id = ${id}`);
     if (rows.affectedRows === 0) {
-      res.status(400).json({ error: "No entry exists" });
+      res.status(400).json({ error: "No Entry Exists" });
     }
     if (rows.affectedRows === 1) {
-      res.status(200).json({ id: id, message: "Item deleted successfully" });
+      res
+        .status(200)
+        .json({ id: rows.insertId, message: "Item Deleted Successfully" });
     }
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: "Delete Item Failed" });
+    console.error(error.sqlMessage);
   }
 };
 
