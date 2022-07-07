@@ -8,6 +8,8 @@ import { useItemsContext } from "./hooks/useItemContext";
 const App = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   const { items, dispatch } = useItemsContext();
 
@@ -15,7 +17,11 @@ const App = () => {
     name,
   };
 
+  console.log(items);
+
   const handleAddItem = async () => {
+    setError(null);
+    setMessage(null);
     const response = await fetch("/api/items/", {
       method: "POST",
       body: JSON.stringify(item),
@@ -24,6 +30,19 @@ const App = () => {
     const data = await response.json();
     if (response.ok) {
       dispatch({ type: "ADD_ITEM", payload: data.item });
+      setName("");
+    }
+    if (data.message) {
+      setMessage(data.message);
+      setTimeout(() => {
+        setMessage(null);
+      }, 2000);
+    }
+    if (data.error) {
+      setError(data.error);
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   };
 
@@ -32,6 +51,11 @@ const App = () => {
       setLoading(true);
       const response = await fetch("/api/items/");
       const data = await response.json();
+      console.log(data);
+      if (data.error) {
+        setLoading(false);
+        setError(data.error);
+      }
       if (response.ok) {
         dispatch({ type: "SET_ITEMS", payload: data.rows });
         setLoading(false);
@@ -44,8 +68,9 @@ const App = () => {
   return (
     <div className="App">
       <section className="bg-dark py-3">
-        <div className="container-sm">
-          <h1 className="text-light h2 text-center">Grocery List App V3</h1>
+        <div className="container-sm d-flex  justify-content-center align-items-center">
+          <h1 className="text-light h2 me-3">Grocery List</h1>
+          <i className="bi bi-card-checklist text-light h1"></i>
         </div>
       </section>
       <section className="bg-primary py-3">
@@ -71,9 +96,19 @@ const App = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section className="mb-3">
         <div className="container-sm px-5 pt-3">
           {loading && <Alert type="primary" text="Loading..." />}
+          {error && (
+            <Alert
+              icon="exclamation-triangle-fill"
+              type="danger"
+              text={error}
+            />
+          )}
+          {message && (
+            <Alert icon="check-circle-fill" type="success" text={message} />
+          )}
           <ul className="list-group">
             {items && items.map((item) => <Item item={item} key={item.id} />)}
           </ul>

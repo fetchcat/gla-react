@@ -1,9 +1,10 @@
 import React from "react";
 
-const Alert = ({ type, text }) => {
+const Alert = ({ icon, type, text }) => {
   return (
     <div className={`alert alert-${type} text-center`} role="alert">
-      {text}
+      <i className={`bi bi-${icon} me-3`}></i>
+      <span>{text}</span>
     </div>
   );
 };

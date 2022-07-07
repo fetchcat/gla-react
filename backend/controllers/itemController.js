@@ -4,9 +4,9 @@ const pool = require("../config/db");
 
 const getAllItems = async (req, res) => {
   try {
-    const [rows] = await pool.execute("SELECT * FROM items");
+    const [rows] = await pool.execute("SELECT * FROM items ORDER BY name");
     if (rows.length === 0) {
-      return res.status(404).json({ error: "No Results" });
+      return res.status(404).json({ error: "No Items to display..." });
     }
     res.status(200).json({ rows });
   } catch (error) {
@@ -19,6 +19,9 @@ const getAllItems = async (req, res) => {
 
 const postNewItem = async (req, res) => {
   const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: "Cannot be blank" });
+  }
   try {
     const [rows] = await pool.execute(
       `INSERT INTO items (name) VALUES('${name}')`
@@ -26,7 +29,9 @@ const postNewItem = async (req, res) => {
     const result = await pool.query(
       `SELECT * FROM items WHERE id = ${rows.insertId}`
     );
-    res.status(201).json({ rows, item: result[0][0] });
+    res
+      .status(201)
+      .json({ message: "Item Added Successfully!", item: result[0][0] });
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
       res.status(400).json({ error: "Entry Already Exists" });
