@@ -17,8 +17,6 @@ const App = () => {
     name,
   };
 
-  console.log(items);
-
   const handleAddItem = async () => {
     setError(null);
     setMessage(null);
@@ -51,7 +49,6 @@ const App = () => {
       setLoading(true);
       const response = await fetch("/api/items/");
       const data = await response.json();
-      console.log(data);
       if (data.error) {
         setLoading(false);
         setError(data.error);

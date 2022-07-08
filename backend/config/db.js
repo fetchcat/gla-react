@@ -2,8 +2,6 @@ require("dotenv").config();
 
 const mysql = require("mysql2/promise");
 
-// const dbSocketPath = process.env.DB_SOCKET_PATH || "/cloudsql";
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,

@@ -5,7 +5,6 @@ const pool = require("../config/db");
 const getAllItems = async (req, res) => {
   try {
     const [rows] = await pool.execute("SELECT * FROM items ORDER BY name");
-    console.log(rows);
     if (rows.length === 0) {
       return res.status(404).json({ error: "No Items to display..." });
     }
